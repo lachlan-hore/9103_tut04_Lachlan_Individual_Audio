@@ -184,7 +184,12 @@ class Ring {
     const manager = window.interactionManager;
     const points = [];
     const pointer = manager.getPointerPosition();
-    if (pointer) points.push(this.worldToLocal(pointer));
+    const pointerEnabled = manager.isMouseOutputEnabled
+      ? manager.isMouseOutputEnabled()
+      : manager.mouseOutputEnabled;
+    if (pointer && pointerEnabled) {
+      points.push(this.worldToLocal(pointer));
+    }
     if (manager.listenerThresholds?.length) {
       manager.listenerThresholds.forEach((listener) => {
         points.push(this.worldToLocal({ x: listener.x, y: listener.y }));

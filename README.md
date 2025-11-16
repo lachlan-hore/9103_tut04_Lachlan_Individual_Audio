@@ -20,6 +20,18 @@
      - `sketch.js` handles the Start Audio gate (autoplay compliance), the top-left threshold card, the bottom-right mixer (Synth/Kick/Hat/Snare/SFX buses plus individual flange/reverb/delay/phaser sliders), the instruction card, the connector-effect debug toggle, and per-frame hooks (`beginFrame`/`applyConnectorEffects`) so visual + audio layers stay synced.
      - External techniques/sources: All drum one-shots (kicks/hats/snares) come from the royalty-free library bundled with FL Studio, so there are no licensing issues and I chose to use them as I already had them installed. A lot of what I used comes from past projects and things I already know, but I frequently referenced the [Web Audio API docs](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API) for help understanding node behavior. I first learned to code in high school and have been largely self taught since, so for me this course was mainly a refresher and helped to revisit collaborative workflows like GitHub, while giving me projects to work on and making my CV/portfolio look better.
 
+### Changes
+
+1. **GUI refactor + new module**
+   - All UI creation (threshold card, start-audio button, mixer, instructions, overlay rendering) now lives in `GUI.js`, keeping `sketch.js` lightweight. The new controller also adds panel show/hide logic so every card collapses to a consistent +/- tile.
+
+2. **Threshold control tweaks**
+   - Default mouse radius dropped to 15px so fine-detail interactions are easier right away. The slider + label sit higher.
+
+3. **Cursor output toggle**
+   - Pressing Space now toggles mouse-triggered audio. When disabled, the GUI changes to “Cursor output: OFF”, the threshold ring turns red and the detection code ignores the cursor while listeners continue to behave normally. Re-enabling Space immediately restores full behaviour.
+
+
 
 # Group Project Readme
 

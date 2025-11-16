@@ -3,12 +3,13 @@ class InteractionManager {
     this.canvas = null;
     this.composition = null;
     this.listenerThresholds = [];
-    this.thresholdRadius = 50;
+    this.thresholdRadius = 15;
     this.thresholdIdCounter = 0;
     this.referenceCounter = 0;
     this.currentShape = null;
     this.lastLoggedSignature = null;
     this.mouseOutputEnabled = true;
+    this.mouseOutputHandlers = new Set();
     this.pointer = null;
     this.thresholdFalloff = 140;
     this.radiusChangeHandlers = new Set();
@@ -99,7 +100,7 @@ class InteractionManager {
   handleKeyDown(evt) {
     if (evt.code === 'Space') {
       evt.preventDefault();
-      this.mouseOutputEnabled = !this.mouseOutputEnabled;
+      this.toggleMouseOutput();
       console.info(
         `[Interaction] Mouse listener ${
           this.mouseOutputEnabled ? 'enabled' : 'muted'
@@ -131,9 +132,18 @@ class InteractionManager {
     return this.thresholdRadius;
   }
 
+  isMouseOutputEnabled() {
+    return this.mouseOutputEnabled;
+  }
+
   onRadiusChange(handler) {
     if (typeof handler !== 'function') return;
     this.radiusChangeHandlers.add(handler);
+  }
+
+  onMouseOutputChange(handler) {
+    if (typeof handler !== 'function') return;
+    this.mouseOutputHandlers.add(handler);
   }
 
   notifyRadiusChange() {
@@ -144,6 +154,27 @@ class InteractionManager {
         console.error('Radius change handler failed', error);
       }
     }
+  }
+
+  notifyMouseOutputChange() {
+    for (const handler of this.mouseOutputHandlers) {
+      try {
+        handler(this.mouseOutputEnabled);
+      } catch (error) {
+        console.error('Mouse output handler failed', error);
+      }
+    }
+  }
+
+  setMouseOutputEnabled(enabled) {
+    const desired = Boolean(enabled);
+    if (desired === this.mouseOutputEnabled) return;
+    this.mouseOutputEnabled = desired;
+    this.notifyMouseOutputChange();
+  }
+
+  toggleMouseOutput() {
+    this.setMouseOutputEnabled(!this.mouseOutputEnabled);
   }
 
   addThreshold(position) {

@@ -147,7 +147,12 @@ class Wheel {
     if (!manager) return [];
     const points = [];
     const pointer = manager.getPointerPosition();
-    if (pointer) points.push(pointer);
+    const pointerEnabled = manager.isMouseOutputEnabled
+      ? manager.isMouseOutputEnabled()
+      : manager.mouseOutputEnabled;
+    if (pointer && pointerEnabled) {
+      points.push(pointer);
+    }
     for (const listener of manager.listenerThresholds ?? []) {
       points.push({ x: listener.x, y: listener.y });
     }

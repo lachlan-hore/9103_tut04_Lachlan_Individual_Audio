@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Abstract Wheels</title>
+
+  <style>
+    /* Center the p5 canvas */
+    body {
+      margin: 0;
+      padding: 0;
+      background: #222323;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- p5.js library -->
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
+
+  <!-- Global constants (colors, settings) -->
+  <script src="constants.js"></script>
+  <!-- Audio setup -->
+  <script src="audio.js"></script>
+  <!-- Input + shape detection -->
+  <script src="events.js"></script>
+
+  <!-- Core classes -->
+  <script src="hexBeads.js"></script>    <!-- Hex cell grid and bead chains -->
+  <script src="ring.js"></script>        <!-- Ring visuals -->
+  <script src="wheel.js"></script>       <!-- Wheel structure -->
+  <script src="connector.js"></script>   <!-- Connecting lines -->
+  <script src="composition.js"></script> <!-- Scene layout -->
+
+  <!-- Main p5 sketch (setup + draw) -->
+  <script src="sketch.js"></script>
+
+</body>
+</html>

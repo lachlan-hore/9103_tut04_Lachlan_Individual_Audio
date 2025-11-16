@@ -2,7 +2,7 @@
 
 ## Audio Feature
 
-1. **How to use with it**
+1. **How to use it**
    - Click the **Start Audio** button in the centre of the canvas.
    - Move the cursor around the wheels: dotted rings trigger kicks, line rings trigger hats, dashed outlines trigger snares, the normal beads emit tonal synths and the special beads trigger a sound effect looping.
    - Click anywhere to drop a listener; each listener behaves like a second cursor with its own trigger radius. Shift‑click (or right click) removes a listener.

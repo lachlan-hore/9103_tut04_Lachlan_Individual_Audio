@@ -6,7 +6,7 @@
    - Click the **Start Audio** button in the centre of the canvas.
    - Move the cursor around the wheels: dotted rings trigger kicks, line rings trigger hats, dashed outlines trigger snares, the normal beads emit tonal synths and the special beads trigger a sound effect looping.
    - Click anywhere to drop a listener; each listener behaves like a second cursor with its own trigger radius. Shift‑click (or right click) removes a listener.
-   - Use the threshold slider (top‑left) to resize the active radius. The mixer panel (bottom‑right) balances Synth/Kick/Hat/Snare/SFX plus the FX master, and also exposes individual FLANGE/REVERB/DELAY/PHASER sliders so you can tame or exaggerate each connector effect. Press **H** to toggle debug labels that show which effect each connector is driving.
+   - Use the threshold slider (top‑left) to resize the active radius. The mixer panel (bottom‑right) balances Synth/Kick/Hat/Snare/SFX plus the FX master, and also exposes individual FLANGE/REVERB/DELAY/PHASER sliders so you can tame or exaggerate each connector effect. Every panel has its own +/- toggle in the top-right corner so you can hide or show it as needed. Press **H** to toggle debug labels that show which effect each connector is driving.
 
 2. **Approach**
    - I chose **audio** as the feature for my individual contribution. Every interaction on the original artwork produces or changes the sound.

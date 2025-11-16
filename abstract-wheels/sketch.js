@@ -6,6 +6,9 @@ let audioButton;
 let canvasElement;
 let mixerContainer;
 let instructionPanel;
+let thresholdBody;
+let mixerBody;
+let instructionBody;
 
 function setup() {
   canvasElement = createCanvas(800, 800);   // Canvas for the artwork
@@ -72,21 +75,28 @@ function setupThresholdControls() {
   thresholdPanel.style('top', '20px');
   thresholdPanel.style('left', '20px');
   thresholdPanel.style('background', 'rgba(0, 0, 0, 0.45)');
-  thresholdPanel.style('padding', '8px 12px 18px 12px');
+  thresholdPanel.style('padding', '28px 12px 18px 36px');
   thresholdPanel.style('border-radius', '6px');
   thresholdPanel.style('z-index', '10');
   thresholdPanel.style('color', '#f1f4f6');
   thresholdPanel.style('font-family', 'monospace');
   thresholdPanel.style('font-size', '13px');
-  thresholdPanel.style('display', 'flex');
-  thresholdPanel.style('flex-direction', 'column');
-  thresholdPanel.style('gap', '6px');
+  thresholdPanel.style('box-sizing', 'border-box');
+  thresholdPanel.style('min-width', '230px');
+  thresholdPanel.style('min-height', '60px');
+  
+
+  thresholdBody = createDiv('');
+  thresholdBody.parent(thresholdPanel);
+  thresholdBody.style('display', 'flex');
+  thresholdBody.style('flex-direction', 'column');
+  thresholdBody.style('gap', '6px');
 
   thresholdLabel = createDiv('');
-  thresholdLabel.parent(thresholdPanel);
+  thresholdLabel.parent(thresholdBody);
 
   thresholdSlider = createSlider(10, 125, initialValue, 1);
-  thresholdSlider.parent(thresholdPanel);
+  thresholdSlider.parent(thresholdBody);
   thresholdSlider.style('width', '160px');
   thresholdSlider.style('z-index', '10');
 
@@ -111,6 +121,7 @@ function setupThresholdControls() {
   setupAudioButton();
   setupMixerUI();
   setupInstructions();
+  addPanelToggle(thresholdPanel, thresholdBody, 'Threshold', 'left');
 }
 
 function updateThresholdLabel(value) {
@@ -152,14 +163,20 @@ function setupMixerUI() {
   mixerContainer.style('right', '20px');
   mixerContainer.style('bottom', '20px');
   mixerContainer.style('display', 'flex');
-  mixerContainer.style('gap', '3px');
-  mixerContainer.style('padding', '18px');
+  mixerContainer.style('gap', '8px');
+  mixerContainer.style('padding', '28px 18px 18px 18px');
   mixerContainer.style('background', 'rgba(0, 0, 0, 0.35)');
   mixerContainer.style('border-radius', '10px');
-  mixerContainer.style('width', '650px');
+  mixerContainer.style('width', '700px');
   mixerContainer.style('box-sizing', 'border-box');
+  mixerContainer.style('min-height', '60px');
   mixerContainer.style('justify-content', 'space-between');
   mixerContainer.style('align-items', 'flex-start');
+
+  mixerBody = createDiv('');
+  mixerBody.parent(mixerContainer);
+  mixerBody.style('display', 'flex');
+  mixerBody.style('gap', '8px');
 
   const configs = [
     { label: 'MASTER', bus: 'master', default: 1 },
@@ -176,7 +193,7 @@ function setupMixerUI() {
 
   configs.forEach((cfg) => {
     const column = createDiv('');
-    column.parent(mixerContainer);
+    column.parent(mixerBody);
     column.style('display', 'flex');
     column.style('flex-direction', 'column');
     column.style('align-items', 'center');
@@ -219,21 +236,27 @@ function setupMixerUI() {
     label.parent(column);
     label.style('margin-top', '4px');
   });
+
+  addPanelToggle(mixerContainer, mixerBody, 'Mixer');
 }
 
 function setupInstructions() {
   instructionPanel = createDiv('');
   instructionPanel.style('position', 'fixed');
-  instructionPanel.style('left', '20px');
-  instructionPanel.style('bottom', '20px');
+  instructionPanel.style('top', '20px');
+  instructionPanel.style('right', '20px');
   instructionPanel.style('background', 'rgba(0, 0, 0, 0.45)');
-  instructionPanel.style('padding', '12px 16px');
+  instructionPanel.style('padding', '28px 16px 16px 16px');
   instructionPanel.style('border-radius', '6px');
   instructionPanel.style('color', '#f1f4f6');
   instructionPanel.style('font-family', 'monospace');
   instructionPanel.style('font-size', '12px');
   instructionPanel.style('max-width', '280px');
-  instructionPanel.html(
+  instructionPanel.style('box-sizing', 'border-box');
+  instructionPanel.style('min-height', '60px');
+  instructionBody = createDiv('');
+  instructionBody.parent(instructionPanel);
+  instructionBody.html(
     `
       <div style="font-weight:bold;margin-bottom:6px;">Controls</div>
       <div>- Click to place listener circle</div>
@@ -241,9 +264,89 @@ function setupInstructions() {
       <div>- Drag slider to change mouse radius</div>
       <div>- Mix faders adjust synth/drums/SFX buses</div>
       <div>- FLANGE/REVERB/DELAY/PHASER sliders control effect wetness</div>
+      <div>- Use the +/- buttons to hide or show each UI panel</div>
       <div>- Press H to toggle connector effect labels</div>
     `
   );
+
+  addPanelToggle(instructionPanel, instructionBody, 'Instructions');
+}
+
+function addPanelToggle(panel, content, label, buttonPosition = 'right') {
+  const collapsedPadding = '4px';
+  const collapsedSize = '34px';
+  const btn = createButton('−');
+  btn.parent(panel);
+  btn.style('position', 'absolute');
+  btn.style('top', '6px');
+  if (buttonPosition === 'left') {
+    btn.style('left', '6px');
+  } else {
+    btn.style('right', '6px');
+  }
+  btn.style('width', '22px');
+  btn.style('height', '22px');
+  btn.style('padding', '0');
+  btn.style('border', 'none');
+  btn.style('border-radius', '4px');
+  btn.style('font-family', 'monospace');
+  btn.style('font-size', '12px');
+  btn.style('background', '#233547');
+  btn.style('color', '#f1f4f6');
+  btn.attribute('title', `Hide ${label}`);
+
+  let visible = true;
+  content._originalDisplay =
+    content._originalDisplay || content.elt.style.display || 'block';
+  const styleKeys = [
+    'width',
+    'height',
+    'padding',
+    'min-width',
+    'min-height',
+    'background',
+  ];
+  const saved = {};
+  styleKeys.forEach((key) => {
+    saved[key] = panel.elt.style.getPropertyValue(key);
+  });
+  if (!saved.background) {
+    saved.background = 'rgba(0, 0, 0, 0.45)';
+  }
+
+  const restoreStyles = () => {
+    styleKeys.forEach((key) => {
+      if (saved[key]) {
+        panel.style(key, saved[key]);
+      } else {
+        panel.style(key, '');
+      }
+    });
+  };
+
+  const applyState = () => {
+    btn.html(visible ? '−' : '+');
+    btn.attribute('title', `${visible ? 'Hide' : 'Show'} ${label}`);
+    if (visible) {
+      content.style('display', content._originalDisplay);
+      restoreStyles();
+    } else {
+      content.style('display', 'none');
+      panel.style('width', collapsedSize);
+      panel.style('height', collapsedSize);
+      panel.style('padding', collapsedPadding);
+      panel.style('min-width', collapsedSize);
+      panel.style('min-height', collapsedSize);
+      panel.style('background', 'rgba(0, 0, 0, 0.65)');
+    }
+  };
+
+  btn.mousePressed(() => {
+    visible = !visible;
+    applyState();
+  });
+
+  applyState();
 }
 
 function keyPressed() {
